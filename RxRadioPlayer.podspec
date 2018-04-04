@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RxRadioPlayer'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of RxRadioPlayer.'
+  s.version          = '0.0.1'
+  s.summary          = 'RxRadioPlayer is a small framework to play radio streaming.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,25 +18,35 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  RxRadioPlayer is a small framework for iOS and tvOS to play radio streaming, using RxSwift.
+  Requires Xcode 9.3 with Swift 4.1.
                        DESC
 
   s.homepage         = 'https://github.com/pawelrup/RxRadioPlayer'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'pawelrup' => 'rupeqdj@gmail.com' }
+  s.author           = { 'Paweł Rup' => 'pawelrup@lobocode.pl' }
   s.source           = { :git => 'https://github.com/pawelrup/RxRadioPlayer.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
-
+  s.tvos.deployment_target = '10.0'
+  
+  s.swift_version = '4.1'
+  
   s.source_files = 'RxRadioPlayer/Classes/**/*'
+  s.pod_target_xcconfig =  {
+	  'SWIFT_VERSION' => '4.1',
+  }
   
   # s.resource_bundles = {
   #   'RxRadioPlayer' => ['RxRadioPlayer/Assets/*.png']
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'Foundation', 'UIKit', 'AVFoundation', 'MediaPlayer'
+  s.dependency 'RxSwift', '~> 4.1.2'
+  s.dependency 'RxCocoa', '~> 4.1.2'
+  s.dependency 'RxSwiftExt', '~> 3.2.0'
+  s.dependency 'Action', '~> 3.5.0'
 end

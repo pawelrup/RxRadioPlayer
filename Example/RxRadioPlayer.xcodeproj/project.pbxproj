@@ -10,11 +10,21 @@
 		14CBA677FB05CE8F7D13C18F /* Pods_RxRadioPlayer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4C52DBE850A0B484DF8C78 /* Pods_RxRadioPlayer_Tests.framework */; };
 		49D96DED2256A1E7DB8478FC /* Pods_RxRadioPlayer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E25E1A416A6B4BE09D6B57 /* Pods_RxRadioPlayer_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
-		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		BAD214412074F3BF00F54DF1 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD214352074F3BE00F54DF1 /* Scene.swift */; };
+		BAD214422074F3BF00F54DF1 /* BindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD214362074F3BE00F54DF1 /* BindableType.swift */; };
+		BAD214432074F3BF00F54DF1 /* Scene+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD214372074F3BE00F54DF1 /* Scene+ViewController.swift */; };
+		BAD214442074F3BF00F54DF1 /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD214382074F3BE00F54DF1 /* SceneCoordinatorType.swift */; };
+		BAD214452074F3BF00F54DF1 /* SceneTransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD214392074F3BE00F54DF1 /* SceneTransitionType.swift */; };
+		BAD214462074F3BF00F54DF1 /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD2143A2074F3BE00F54DF1 /* SceneCoordinator.swift */; };
+		BAD214472074F3BF00F54DF1 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD2143C2074F3BE00F54DF1 /* Metadata.swift */; };
+		BAD214482074F3BF00F54DF1 /* Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD2143D2074F3BE00F54DF1 /* Cover.swift */; };
+		BAD214492074F3BF00F54DF1 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD2143F2074F3BF00F54DF1 /* PlayerViewModel.swift */; };
+		BAD2144A2074F3BF00F54DF1 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD214402074F3BF00F54DF1 /* PlayerViewController.swift */; };
+		BAD2144E2074F3D100F54DF1 /* CoverLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD2144C2074F3D100F54DF1 /* CoverLoader.swift */; };
+		BAD214512074F59000F54DF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAD2144F2074F59000F54DF1 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,21 +42,31 @@
 		607FACD01AFB9204008FA782 /* RxRadioPlayer_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxRadioPlayer_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* RxRadioPlayer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxRadioPlayer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		7C65E690ED5B64F7696C3914 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		7C65E690ED5B64F7696C3914 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		7F4C52DBE850A0B484DF8C78 /* Pods_RxRadioPlayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxRadioPlayer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9A32754F047F0E9E717C7C /* Pods-RxRadioPlayer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxRadioPlayer_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxRadioPlayer_Example/Pods-RxRadioPlayer_Example.release.xcconfig"; sourceTree = "<group>"; };
 		A2B2ACAC0BFA2FF9709A17E3 /* Pods-RxRadioPlayer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxRadioPlayer_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RxRadioPlayer_Tests/Pods-RxRadioPlayer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		ADA6FCB2949AFF5C35A6064E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		ADA6FCB2949AFF5C35A6064E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B0E25E1A416A6B4BE09D6B57 /* Pods_RxRadioPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxRadioPlayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3A6E0EE7B422FD969692463 /* Pods-RxRadioPlayer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxRadioPlayer_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RxRadioPlayer_Example/Pods-RxRadioPlayer_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		C6366929EC320355C0AA0DE7 /* RxRadioPlayer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = RxRadioPlayer.podspec; path = ../RxRadioPlayer.podspec; sourceTree = "<group>"; };
+		BAD214352074F3BE00F54DF1 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		BAD214362074F3BE00F54DF1 /* BindableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindableType.swift; sourceTree = "<group>"; };
+		BAD214372074F3BE00F54DF1 /* Scene+ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Scene+ViewController.swift"; sourceTree = "<group>"; };
+		BAD214382074F3BE00F54DF1 /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
+		BAD214392074F3BE00F54DF1 /* SceneTransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransitionType.swift; sourceTree = "<group>"; };
+		BAD2143A2074F3BE00F54DF1 /* SceneCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
+		BAD2143C2074F3BE00F54DF1 /* Metadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
+		BAD2143D2074F3BE00F54DF1 /* Cover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cover.swift; sourceTree = "<group>"; };
+		BAD2143F2074F3BF00F54DF1 /* PlayerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
+		BAD214402074F3BF00F54DF1 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		BAD2144C2074F3D100F54DF1 /* CoverLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverLoader.swift; sourceTree = "<group>"; };
+		BAD214502074F59000F54DF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C6366929EC320355C0AA0DE7 /* RxRadioPlayer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = RxRadioPlayer.podspec; path = ../RxRadioPlayer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,10 +114,13 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				BAD2143B2074F3BE00F54DF1 /* Model */,
+				BAD214342074F3BE00F54DF1 /* Scenes */,
+				BAD2143E2074F3BF00F54DF1 /* View Model */,
+				BAD2144B2074F3D100F54DF1 /* Services */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				BAD2144F2074F59000F54DF1 /* LaunchScreen.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
-				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for RxRadioPlayer";
@@ -139,6 +162,45 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		BAD214342074F3BE00F54DF1 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				BAD214352074F3BE00F54DF1 /* Scene.swift */,
+				BAD214362074F3BE00F54DF1 /* BindableType.swift */,
+				BAD214372074F3BE00F54DF1 /* Scene+ViewController.swift */,
+				BAD214382074F3BE00F54DF1 /* SceneCoordinatorType.swift */,
+				BAD214392074F3BE00F54DF1 /* SceneTransitionType.swift */,
+				BAD2143A2074F3BE00F54DF1 /* SceneCoordinator.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		BAD2143B2074F3BE00F54DF1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BAD2143C2074F3BE00F54DF1 /* Metadata.swift */,
+				BAD2143D2074F3BE00F54DF1 /* Cover.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BAD2143E2074F3BF00F54DF1 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				BAD2143F2074F3BF00F54DF1 /* PlayerViewModel.swift */,
+				BAD214402074F3BF00F54DF1 /* PlayerViewController.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		BAD2144B2074F3D100F54DF1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BAD2144C2074F3D100F54DF1 /* CoverLoader.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		EEDF10F60D562B18C911BEFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +229,7 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "RxRadioPlayer_Example" */;
 			buildPhases = (
 				0C02DFDC49D9C65032D59917 /* [CP] Check Pods Manifest.lock */,
+				BAD214522074F72800F54DF1 /* [SwiftLint] Run Script */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -210,7 +273,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -248,8 +311,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAD214512074F59000F54DF1 /* LaunchScreen.storyboard in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,11 +352,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-RxRadioPlayer_Example/Pods-RxRadioPlayer_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRadioPlayer/RxRadioPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRadioPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -363,6 +434,20 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BAD214522074F72800F54DF1 /* [SwiftLint] Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[SwiftLint] Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -370,8 +455,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				BAD214412074F3BF00F54DF1 /* Scene.swift in Sources */,
+				BAD214492074F3BF00F54DF1 /* PlayerViewModel.swift in Sources */,
+				BAD2144E2074F3D100F54DF1 /* CoverLoader.swift in Sources */,
+				BAD214482074F3BF00F54DF1 /* Cover.swift in Sources */,
+				BAD214432074F3BF00F54DF1 /* Scene+ViewController.swift in Sources */,
+				BAD214472074F3BF00F54DF1 /* Metadata.swift in Sources */,
+				BAD214442074F3BF00F54DF1 /* SceneCoordinatorType.swift in Sources */,
+				BAD214422074F3BF00F54DF1 /* BindableType.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				BAD214462074F3BF00F54DF1 /* SceneCoordinator.swift in Sources */,
+				BAD2144A2074F3BF00F54DF1 /* PlayerViewController.swift in Sources */,
+				BAD214452074F3BF00F54DF1 /* SceneTransitionType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,12 +497,12 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
+		BAD2144F2074F59000F54DF1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				607FACDF1AFB9204008FA782 /* Base */,
+				BAD214502074F59000F54DF1 /* Base */,
 			);
-			name = LaunchScreen.xib;
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -425,12 +520,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -478,12 +575,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

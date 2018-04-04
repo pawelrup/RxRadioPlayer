@@ -1,6 +1,7 @@
 use_frameworks!
 
 target 'RxRadioPlayer_Example' do
+  pod 'SwiftLint'
   pod 'RxRadioPlayer', :path => '../'
 
   target 'RxRadioPlayer_Tests' do

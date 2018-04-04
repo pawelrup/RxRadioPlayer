@@ -1,15 +1,17 @@
 # RxRadioPlayer
 
-[![CI Status](http://img.shields.io/travis/pawelrup/RxRadioPlayer.svg?style=flat)](https://travis-ci.org/pawelrup/RxRadioPlayer)
 [![Version](https://img.shields.io/cocoapods/v/RxRadioPlayer.svg?style=flat)](http://cocoapods.org/pods/RxRadioPlayer)
 [![License](https://img.shields.io/cocoapods/l/RxRadioPlayer.svg?style=flat)](http://cocoapods.org/pods/RxRadioPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/RxRadioPlayer.svg?style=flat)](http://cocoapods.org/pods/RxRadioPlayer)
+[![Swift 4.1](https://img.shields.io/badge/Swift-4.1-orange.svg?style=flat)](https://swift.org/)
 
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
+
+Xcode 9.3, Swift 4.1
 
 ## Installation
 
@@ -22,7 +24,7 @@ pod 'RxRadioPlayer'
 
 ## Author
 
-pawelrup, rupeqdj@gmail.com
+lobocode, pawelrup@lobocode.pl
 
 ## License
 
