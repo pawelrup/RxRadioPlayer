@@ -12,40 +12,40 @@ import MediaPlayer
 import Action
 
 open class RadioPlayer: NSObject {
-	
+
 	private (set) var metadataLoader: RadioPlayerMetadataLoaderType = RadioPlayerMetadataLoader()
-	open static let shared = RadioPlayer()
-	
+	public static let shared = RadioPlayer()
+
 	// MARK: - Private properties
-	
+
 	/// AVPlayer
 	private var player: AVPlayer?
-	
+
 	/// Last player item
 	private var lastPlayerItem: AVPlayerItem?
-	
+
 	/// Default player item
 	private var playerItem: AVPlayerItem? {
 		didSet {
 			playerItemDidChange()
 		}
 	}
-	
+
 	private var avPlayerItemDisposables = DisposeBag()
 	private var metadataTimerDisposables = DisposeBag()
 	private var disposeBag = DisposeBag()
-	
+
 	// MARK: - Properties
-	
+
 	public let state = BehaviorSubject<RadioPlayerState>(value: .urlNotSet)
 	public let playbackState = BehaviorSubject<RadioPlayerPlaybackState>(value: .stopped)
 	public let isPlaying = BehaviorSubject<Bool>(value: false)
 	public let metadata = BehaviorSubject<RadioPlayerMetadata?>(value: nil)
 	public let rate = BehaviorSubject<Float?>(value: nil)
-	
+
 	/// Check for headphones, used to handle audio route change
 	public let areHeadphonesConnected = BehaviorSubject<Bool>(value: false)
-	
+
 	/// The player current radio URL
 	open var radioURL: URL? {
 		didSet {
@@ -53,21 +53,21 @@ open class RadioPlayer: NSObject {
 			setMetadataLoader(with: radioURL)
 		}
 	}
-	
+
 	/// The player starts playing when the radioURL property gets set. (default == true)
 	open var isAutoPlay = true
-	
+
 	private override init() {
 		super.init()
-		
+
 		let audioSession = AVAudioSession.sharedInstance()
-		var options: AVAudioSessionCategoryOptions = []
+		var options: AVAudioSession.CategoryOptions = []
 		#if os(iOS)
 		options = [.defaultToSpeaker, .allowBluetooth]
 		#endif
-		try? audioSession.setCategory(AVAudioSessionCategoryPlayback, with: options)
+		try? audioSession.setCategory(.playback, mode: .default, options: options)
 		try? audioSession.setActive(true)
-		
+
 		let remoteCommandCenter = MPRemoteCommandCenter.shared()
 		remoteCommandCenter.togglePlayPauseCommand.isEnabled = true
 		remoteCommandCenter.togglePlayPauseCommand.addTarget { [weak self] (_: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus in
@@ -89,24 +89,24 @@ open class RadioPlayer: NSObject {
 			self?.stop()
 			return .success
 		}
-		
+
 		// Check for headphones
 		checkHeadphonesConnection(outputs: audioSession.currentRoute.outputs)
-		
+
 		playbackState
 			.map { $0 == .playing }
 			.subscribe(isPlaying)
 			.disposed(by: disposeBag)
 		setObservables(to: audioSession)
 	}
-	
+
 	convenience init(radioURL: URL, isAutoPlay: Bool = true, metadataLoader: RadioPlayerMetadataLoaderType? = nil) {
 		self.init()
 		self.isAutoPlay = isAutoPlay
 		self.radioURL = radioURL
 		self.metadataLoader = metadataLoader ?? RadioPlayerMetadataLoader()
 	}
-	
+
 	deinit {
 		resetPlayer()
 		let remoteCommandCenter = MPRemoteCommandCenter.shared()
@@ -115,25 +115,25 @@ open class RadioPlayer: NSObject {
 		remoteCommandCenter.pauseCommand.removeTarget(self)
 		remoteCommandCenter.stopCommand.removeTarget(self)
 	}
-	
+
 	// MARK: - Private helpers
-	
+
 	private func resetPlayer() {
 		stop()
 		playerItem = nil
 		lastPlayerItem = nil
 		player = nil
 	}
-	
+
 	private func radioURLDidChange(with url: URL?) {
 		resetPlayer()
 		guard let url = url else {
 			state.onNext(.urlNotSet)
 			return
 		}
-		
+
 		state.onNext(.loading)
-		
+
 		preparePlayer(with: AVAsset(url: url)) { [weak self] (success: Bool, asset: AVAsset?) in
 			guard success, let asset = asset else {
 				self?.resetPlayer()
@@ -143,49 +143,49 @@ open class RadioPlayer: NSObject {
 			self?.setupPlayer(with: asset)
 		}
 	}
-	
+
 	private func setupPlayer(with asset: AVAsset) {
 		if player == nil {
 			player = AVPlayer()
 		}
 		playerItem = AVPlayerItem(asset: asset)
 	}
-	
+
 	/// Prepare the player from the passed AVAsset
 	private func preparePlayer(with asset: AVAsset?, completionHandler: @escaping (_ isPlayable: Bool, _ asset: AVAsset?) -> Void) {
 		guard let asset = asset else {
 			completionHandler(false, nil)
 			return
 		}
-		
+
 		let requestedKey = ["playable"]
-		
+
 		asset.loadValuesAsynchronously(forKeys: requestedKey) {
-			
+
 			DispatchQueue.main.async {
 				var error: NSError?
-				
+
 				let keyStatus = asset.statusOfValue(forKey: "playable", error: &error)
 				if keyStatus == AVKeyValueStatus.failed || !asset.isPlayable {
 					completionHandler(false, nil)
 					return
 				}
-				
+
 				completionHandler(true, asset)
 			}
 		}
 	}
-	
+
 	private func checkHeadphonesConnection(outputs: [AVAudioSessionPortDescription]) {
-		for output in outputs where output.portType == AVAudioSessionPortHeadphones {
+		for output in outputs where output.portType == .headphones {
 			areHeadphonesConnected.onNext(true)
 			break
 		}
 		areHeadphonesConnected.onNext(false)
 	}
-	
+
 	// MARK: - Public functions
-	
+
 	open func play() {
 		guard let player = player else { return }
 		if player.currentItem == nil, playerItem != nil {
@@ -194,42 +194,42 @@ open class RadioPlayer: NSObject {
 		player.play()
 		playbackState.onNext(.playing)
 	}
-	
+
 	open func pause() {
 		guard let player = player else { return }
 		player.pause()
 		playbackState.onNext(.paused)
 	}
-	
+
 	open func stop() {
 		guard let player = player else { return }
 		player.replaceCurrentItem(with: nil)
 		metadata.onNext(nil)
 		playbackState.onNext(.stopped)
 	}
-	
+
 	open func togglePlaying() {
 		try? isPlaying.value() ? pause() : play()
 	}
-	
+
 	private func playerItemDidChange() {
 		guard lastPlayerItem != playerItem else { return }
-		
+
 		if lastPlayerItem != nil {
 			avPlayerItemDisposables = DisposeBag()
 		}
-		
+
 		lastPlayerItem = playerItem
 		metadata.onNext(nil)
-		
+
 		if let item = playerItem {
 			setObservables(to: item)
 			if isAutoPlay { play() }
 		}
 	}
-	
+
 	// MARK: - Info Center
-	
+
 	public func setNowPlayingInfo(withArtist artist: String, title: String, andImage image: UIImage) {
 		let coverItem: MPMediaItemArtwork
 		if #available(iOS 10.0, tvOS 10.0, *) {
@@ -245,16 +245,16 @@ open class RadioPlayer: NSObject {
 		nowPlayingInfo[MPMediaItemPropertyArtwork] = coverItem
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
 	}
-	
+
 	public lazy var setInfoCenter: Action<RadioPlayerInfoCenterData, Void> = {
 		return Action { [weak self] (infoCenterData: RadioPlayerInfoCenterData) in
 			self?.setNowPlayingInfo(withArtist: infoCenterData.artist, title: infoCenterData.title, andImage: infoCenterData.image)
 			return Observable.just(())
 		}
 	}()
-	
+
 	// MARK: - Observing
-	
+
 	private func setMetadataLoader(with url: URL?) {
 		metadataTimerDisposables = DisposeBag()
 		guard let url = url else { return }
@@ -268,7 +268,7 @@ open class RadioPlayer: NSObject {
 			})
 			.disposed(by: metadataTimerDisposables)
 	}
-	
+
 	private func setObservables(to audioSession: AVAudioSession) {
 		audioSession.rx.routeChange
 			.subscribeOn(MainScheduler.instance)
@@ -288,10 +288,10 @@ open class RadioPlayer: NSObject {
 			})
 			.disposed(by: disposeBag)
 	}
-	
+
 	private func setObservables(to item: AVPlayerItem) {
 		item.rx.status
-			.subscribe(onNext: { [weak self] (status: AVPlayerItemStatus) in
+			.subscribe(onNext: { [weak self] (status: AVPlayerItem.Status) in
 				if status == .readyToPlay {
 					self?.state.onNext(.readyToPlay)
 				} else if status == .failed {

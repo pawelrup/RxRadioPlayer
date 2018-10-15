@@ -1,37 +1,45 @@
 PODS:
-  - Action (3.5.0):
-    - RxCocoa (~> 4.0)
+  - Action (3.8.0):
+    - RxCocoa (~> 4.3.0)
+    - RxSwift (~> 4.3.0)
+  - RxCocoa (4.3.1):
     - RxSwift (~> 4.0)
-  - RxCocoa (4.1.2):
+  - RxRadioPlayer (0.0.2):
+    - Action (~> 3.8.0)
+    - RxCocoa (~> 4.3.1)
+    - RxSwift (~> 4.3.1)
+    - RxSwiftExt (~> 3.3.0)
+  - RxSwift (4.3.1)
+  - RxSwiftExt (3.3.0):
+    - RxSwiftExt/Core (= 3.3.0)
+  - RxSwiftExt/Core (3.3.0):
     - RxSwift (~> 4.0)
-  - RxRadioPlayer (0.0.1):
-    - Action (~> 3.5.0)
-    - RxCocoa (~> 4.1.2)
-    - RxSwift (~> 4.1.2)
-    - RxSwiftExt (~> 3.2.0)
-  - RxSwift (4.1.2)
-  - RxSwiftExt (3.2.0):
-    - RxSwiftExt/Core (= 3.2.0)
-  - RxSwiftExt/Core (3.2.0):
-    - RxSwift (~> 4.0)
-  - SwiftLint (0.25.0)
+  - SwiftLint (0.27.0)
 
 DEPENDENCIES:
   - RxRadioPlayer (from `../`)
   - SwiftLint
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Action
+    - RxCocoa
+    - RxSwift
+    - RxSwiftExt
+    - SwiftLint
+
 EXTERNAL SOURCES:
   RxRadioPlayer:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  Action: d60087ebce41b969d1afdad01e2fa1372a82f26e
-  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
-  RxRadioPlayer: bb27d92b6fcf29dca104afab0719b2c39a20b8a9
-  RxSwift: e49536837d9901277638493ea537394d4b55f570
-  RxSwiftExt: 64b7140124629a6a084159735f3714f0fb1c61d6
-  SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
+  Action: 2275d04a407ecaf46a58d58a304388a28155a0a1
+  RxCocoa: 78763c7b07d02455598d9fc3c1ad091a28b73635
+  RxRadioPlayer: 4ea491fa8b857a8234133e94fb4747ac3fe46a9e
+  RxSwift: fe0fd770a43acdb7d0a53da411c9b892e69bb6e4
+  RxSwiftExt: 81afb48ab0602f503147417baeb3989d64c7687d
+  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
 
 PODFILE CHECKSUM: 154d555331f5c73477ccc21d2c031800314b6cbb
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

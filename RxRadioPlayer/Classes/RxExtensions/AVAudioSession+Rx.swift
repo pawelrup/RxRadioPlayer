@@ -13,13 +13,13 @@ import RxCocoa
 import RxSwiftExt
 
 @available(iOS 6.0, tvOS 9.0, *)
-public typealias AVAudioSessionRouteChangeInfo = (reason: AVAudioSessionRouteChangeReason, previousRouteDescription: AVAudioSessionRouteDescription?)
+public typealias AVAudioSessionRouteChangeInfo = (reason: AVAudioSession.RouteChangeReason, previousRouteDescription: AVAudioSessionRouteDescription?)
 
 @available(iOS 6.0, tvOS 9.0, *)
 extension Reactive where Base: AVAudioSession {
-	
+
 	public var routeChange: Observable<AVAudioSessionRouteChangeInfo> {
-		return NotificationCenter.default.rx.notification(.AVAudioSessionRouteChange, object: base)
+		return NotificationCenter.default.rx.notification(AVAudioSession.routeChangeNotification, object: base)
 			.map { $0.userInfo }
 			.map {
 				let reasonRaw = $0?[AVAudioSessionRouteChangeReasonKey] as? UInt
@@ -27,9 +27,9 @@ extension Reactive where Base: AVAudioSession {
 				return (reasonRaw, previousRoute)
 			}
 			.map { (reasonRaw: UInt?, previousRoute: AVAudioSessionRouteDescription?) -> AVAudioSessionRouteChangeInfo in
-				let reason: AVAudioSessionRouteChangeReason
+				let reason: AVAudioSession.RouteChangeReason
 				if let raw = reasonRaw {
-					reason = AVAudioSessionRouteChangeReason(rawValue: raw) ?? .unknown
+					reason = AVAudioSession.RouteChangeReason(rawValue: raw) ?? .unknown
 				} else {
 					reason = .unknown
 				}
