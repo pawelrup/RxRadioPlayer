@@ -11,4 +11,10 @@ public struct RadioPlayerInfoCenterData {
 	public let artist: String
 	public let title: String
 	public let image: UIImage
+	
+	public init(artist: String, title: String, image: UIImage) {
+		self.artist = artist
+		self.title = title
+		self.image = image
+	}
 }
