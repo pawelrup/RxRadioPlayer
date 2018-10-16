@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/cocoapods/v/RxRadioPlayer.svg?style=flat)](http://cocoapods.org/pods/RxRadioPlayer)
 [![License](https://img.shields.io/cocoapods/l/RxRadioPlayer.svg?style=flat)](http://cocoapods.org/pods/RxRadioPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/RxRadioPlayer.svg?style=flat)](http://cocoapods.org/pods/RxRadioPlayer)
-[![Swift 4.1](https://img.shields.io/badge/Swift-4.1-orange.svg?style=flat)](https://swift.org/)
+[![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://swift.org/)
 
 ## Example
 
@@ -11,7 +11,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-Xcode 9.3, Swift 4.1
+Xcode 10.0, Swift 4.2
 
 ## Installation
 

@@ -36,6 +36,8 @@ open class RadioPlayer: NSObject {
 	private var disposeBag = DisposeBag()
 
 	// MARK: - Properties
+	
+	public let infoCenterData: AnyObserver<RadioPlayerInfoCenterData>
 
 	public let state = BehaviorSubject<RadioPlayerState>(value: .urlNotSet)
 	public let playbackState = BehaviorSubject<RadioPlayerPlaybackState>(value: .stopped)
@@ -58,6 +60,8 @@ open class RadioPlayer: NSObject {
 	open var isAutoPlay = true
 
 	private override init() {
+		let infoCenterData = PublishSubject<RadioPlayerInfoCenterData>()
+		self.infoCenterData = infoCenterData.asObserver()
 		super.init()
 
 		let audioSession = AVAudioSession.sharedInstance()
@@ -98,6 +102,13 @@ open class RadioPlayer: NSObject {
 			.subscribe(isPlaying)
 			.disposed(by: disposeBag)
 		setObservables(to: audioSession)
+		
+		Observable.of(infoCenterData)
+			.merge()
+			.subscribe(onNext: { [unowned self] (infoCenterData: RadioPlayerInfoCenterData) in
+				self.setNowPlayingInfo(withArtist: infoCenterData.artist, title: infoCenterData.title, andImage: infoCenterData.image)
+			})
+			.disposed(by: disposeBag)
 	}
 
 	convenience init(radioURL: URL, isAutoPlay: Bool = true, metadataLoader: RadioPlayerMetadataLoaderType? = nil) {
@@ -231,27 +242,15 @@ open class RadioPlayer: NSObject {
 	// MARK: - Info Center
 
 	public func setNowPlayingInfo(withArtist artist: String, title: String, andImage image: UIImage) {
-		let coverItem: MPMediaItemArtwork
-		if #available(iOS 10.0, tvOS 10.0, *) {
-			coverItem = MPMediaItemArtwork(boundsSize: image.size) { [unowned image] (_: CGSize) -> UIImage in
+		let coverItem = MPMediaItemArtwork(boundsSize: image.size) { (_: CGSize) -> UIImage in
 				return image
 			}
-		} else {
-			coverItem = MPMediaItemArtwork(image: image)
-		}
 		var nowPlayingInfo = [String: Any]()
 		nowPlayingInfo[MPMediaItemPropertyArtist] = artist
 		nowPlayingInfo[MPMediaItemPropertyTitle] = title
 		nowPlayingInfo[MPMediaItemPropertyArtwork] = coverItem
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
 	}
-
-	public lazy var setInfoCenter: Action<RadioPlayerInfoCenterData, Void> = {
-		return Action { [weak self] (infoCenterData: RadioPlayerInfoCenterData) in
-			self?.setNowPlayingInfo(withArtist: infoCenterData.artist, title: infoCenterData.title, andImage: infoCenterData.image)
-			return Observable.just(())
-		}
-	}()
 
 	// MARK: - Observing
 
