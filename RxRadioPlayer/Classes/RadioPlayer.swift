@@ -258,13 +258,12 @@ open class RadioPlayer: NSObject {
 		metadataTimerDisposables = DisposeBag()
 		guard let url = url else { return }
 		isPlaying
-			.flatMapLatest { isPlaying in
+			.flatMapLatest { [unowned self] isPlaying in
 				isPlaying ? .empty() : Observable<Int>.interval(5, scheduler: MainScheduler.instance)
+					.flatMap { _ in self.metadataLoader.load(from: url).asObservable() }
 			}
-			.withLatestFrom(metadataLoader.load(from: url))
-			.subscribe(onNext: { [weak self] (metadata: RadioPlayerMetadata) in
-				self?.metadata.onNext(metadata)
-			})
+			.observeOn(MainScheduler.instance)
+			.bind(to: metadata)
 			.disposed(by: metadataTimerDisposables)
 	}
 
@@ -306,20 +305,18 @@ open class RadioPlayer: NSObject {
 			})
 			.disposed(by: avPlayerItemDisposables)
 		item.rx.playbackLikelyToKeepUp
-			.subscribe(onNext: { [weak self] (isLikelyToKeepUp: Bool) in
-				let state: RadioPlayerState = isLikelyToKeepUp ? .loadingFinished : .loading
-				self?.state.onNext(state)
-			})
+			.map { (isLikelyToKeepUp: Bool) in
+				return isLikelyToKeepUp ? .loadingFinished : .loading
+			}
+			.bind(to: state)
 			.disposed(by: avPlayerItemDisposables)
 		item.rx.timedMetadata
 			.map { $0.first }
 			.unwrap()
 			.map { RadioPlayerMetadata(metadata: $0) }
 			.unwrap()
-			.subscribe(onNext: { [weak self] (metadata: RadioPlayerMetadata) in
-				guard let strongSelf = self else { return }
-				strongSelf.metadata.onNext(metadata)
-			})
+			.observeOn(MainScheduler.instance)
+			.bind(to: metadata)
 			.disposed(by: avPlayerItemDisposables)
 		Observable
 			.combineLatest(item.rx.playbackLikelyToKeepUp, item.rx.playbackBufferEmpty) { (playbackLikelyToKeepUp: Bool, playbackBufferEmpty: Bool) in

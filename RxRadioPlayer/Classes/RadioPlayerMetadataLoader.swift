@@ -11,12 +11,12 @@ import RxSwift
 import RxSwiftExt
 
 protocol RadioPlayerMetadataLoaderType {
-	func load(from url: URL) -> Observable<RadioPlayerMetadata>
+	func load(from url: URL) -> Single<RadioPlayerMetadata>
 }
 
 class RadioPlayerMetadataLoader: RadioPlayerMetadataLoaderType {
 	
-	func load(from url: URL) -> Observable<RadioPlayerMetadata> {
+	func load(from url: URL) -> Single<RadioPlayerMetadata> {
 		let url = url.appendingPathComponent("7.html")
 		var request = URLRequest(url: url)
 		request.setValue("Mozilla/1.0 SHOUTcast example", forHTTPHeaderField: "user-agent")
@@ -30,5 +30,6 @@ class RadioPlayerMetadataLoader: RadioPlayerMetadataLoaderType {
 				let errorMetadata = RadioPlayerMetadata(artist: "Connection failed.", title: error.localizedDescription)
 				return Observable.just(errorMetadata)
 			})
+			.asSingle()
 	}
 }
