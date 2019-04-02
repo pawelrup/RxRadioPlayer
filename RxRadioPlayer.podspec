@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RxRadioPlayer'
-  s.version          = '0.0.5'
+  s.version          = '0.0.6'
   s.summary          = 'RxRadioPlayer is a small framework to play radio streaming.'
 
 # This description is used to generate tags and improve search results.
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 
   s.description      = <<-DESC
   RxRadioPlayer is a small framework for iOS and tvOS to play radio streaming, using RxSwift.
-  Requires Xcode 10.0 with Swift 4.2.
+  Requires Xcode 10.2 with Swift 5.0.
                        DESC
 
   s.homepage         = 'https://github.com/pawelrup/RxRadioPlayer'
@@ -32,11 +32,11 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.0'
   s.tvos.deployment_target = '10.0'
 
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.source_files = 'RxRadioPlayer/Classes/**/*'
   s.pod_target_xcconfig =  {
-	  'SWIFT_VERSION' => '4.2',
+	  'SWIFT_VERSION' => '5.0',
   }
 
   # s.resource_bundles = {
@@ -45,8 +45,7 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'Foundation', 'UIKit', 'AVFoundation', 'MediaPlayer'
-  s.dependency 'RxSwift', '~> 4.3.1'
-  s.dependency 'RxCocoa', '~> 4.3.1'
-  s.dependency 'RxSwiftExt', '~> 3.3.0'
-  s.dependency 'Action', '~> 3.8.0'
+  s.dependency 'RxSwift', '~> 4.5.0'
+  s.dependency 'RxCocoa', '~> 4.5.0'
+  s.dependency 'RxSwiftExt', '~> 3.4.0'
 end
