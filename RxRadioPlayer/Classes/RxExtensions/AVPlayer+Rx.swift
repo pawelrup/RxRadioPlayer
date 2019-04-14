@@ -13,7 +13,7 @@ import RxCocoa
 
 extension Reactive where Base: AVPlayer {
 	public var rate: Observable<Float> {
-		return self.observe(Float.self, #keyPath(AVPlayer.rate))
+		return observe(Float.self, #keyPath(AVPlayer.rate))
 			.map { $0 ?? 0 }
 	}
 
@@ -22,22 +22,22 @@ extension Reactive where Base: AVPlayer {
 	}
 
 	public var status: Observable<AVPlayer.Status> {
-		return self.observe(AVPlayer.Status.self, #keyPath(AVPlayer.status))
+		return observe(AVPlayer.Status.self, #keyPath(AVPlayer.status))
 			.map { $0 ?? .unknown }
 	}
 
 	public var error: Observable<NSError?> {
-		return self.observe(NSError.self, #keyPath(AVPlayer.error))
+		return observe(NSError.self, #keyPath(AVPlayer.error))
 	}
 
 	@available(iOS 10.0, tvOS 10.0, *)
 	public var reasonForWaitingToPlay: Observable<AVPlayer.WaitingReason?> {
-		return self.observe(AVPlayer.WaitingReason.self, #keyPath(AVPlayer.reasonForWaitingToPlay))
+		return observe(AVPlayer.WaitingReason.self, #keyPath(AVPlayer.reasonForWaitingToPlay))
 	}
 
 	@available(iOS 10.0, tvOS 10.0, *)
 	public var timeControlStatus: Observable<AVPlayer.TimeControlStatus> {
-		return self.observe(AVPlayer.TimeControlStatus.self, #keyPath(AVPlayer.timeControlStatus))
+		return observe(AVPlayer.TimeControlStatus.self, #keyPath(AVPlayer.timeControlStatus))
 			.map { $0 ?? .waitingToPlayAtSpecifiedRate }
 	}
 

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RxRadioPlayer'
-  s.version          = '0.0.6'
+  s.version          = '0.0.7'
   s.summary          = 'RxRadioPlayer is a small framework to play radio streaming.'
 
 # This description is used to generate tags and improve search results.

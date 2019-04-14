@@ -13,7 +13,7 @@ import RxCocoa
 
 extension Reactive where Base: AVPlayerLayer {
 	public var readyForDisplay: Observable<Bool> {
-		return self.observe(Bool.self, #keyPath(AVPlayerLayer.readyForDisplay))
+		return observe(Bool.self, #keyPath(AVPlayerLayer.readyForDisplay))
 			.map { $0 ?? false }
 	}
 }
