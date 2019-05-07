@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RxRadioPlayer'
-  s.version          = '0.0.7'
+  s.version          = '0.0.8'
   s.summary          = 'RxRadioPlayer is a small framework to play radio streaming.'
 
 # This description is used to generate tags and improve search results.
@@ -45,7 +45,7 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'Foundation', 'UIKit', 'AVFoundation', 'MediaPlayer'
-  s.dependency 'RxSwift', '~> 4.5.0'
-  s.dependency 'RxCocoa', '~> 4.5.0'
-  s.dependency 'RxSwiftExt', '~> 3.4.0'
+  s.dependency 'RxSwift'
+  s.dependency 'RxCocoa'
+  s.dependency 'RxSwiftExt'
 end
