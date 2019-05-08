@@ -10,7 +10,6 @@ import Foundation
 import AVFoundation
 import RxSwift
 import RxCocoa
-import RxSwiftExt
 
 @available(iOS 6.0, tvOS 9.0, *)
 public typealias AVAudioSessionRouteChangeInfo = (reason: AVAudioSession.RouteChangeReason, previousRouteDescription: AVAudioSessionRouteDescription?)

@@ -10,7 +10,6 @@ import Foundation
 import AVFoundation
 import RxSwift
 import RxCocoa
-import RxSwiftExt
 
 extension Reactive where Base: AVPlayerItem {
 	public var status: Observable<AVPlayerItem.Status> {

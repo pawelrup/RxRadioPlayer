@@ -1,12 +1,6 @@
 use_frameworks!
-
-target 'RxRadioPlayer_Example' do
-  pod 'SwiftLint'
+target 'RxRadioPlayer_Tests' do
   pod 'RxRadioPlayer', :path => '../'
-
-  target 'RxRadioPlayer_Tests' do
-    inherit! :search_paths
-
-    
-  end
+  
+  
 end

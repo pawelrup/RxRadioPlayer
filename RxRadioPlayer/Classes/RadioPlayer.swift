@@ -322,9 +322,9 @@ open class RadioPlayer: RadioPlayerType {
 			.disposed(by: avPlayerItemDisposables)
 		item.rx.timedMetadata
 			.map { $0.first }
-			.unwrap()
+			.compactMap { $0 }
 			.map { RadioPlayerMetadata(metadata: $0) }
-			.unwrap()
+			.compactMap { $0 }
 			.observeOn(MainScheduler.instance)
 			.bind(to: metadataSubject)
 			.disposed(by: avPlayerItemDisposables)
