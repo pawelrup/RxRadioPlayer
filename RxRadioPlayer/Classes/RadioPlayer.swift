@@ -76,7 +76,7 @@ open class RadioPlayer: RadioPlayerType {
 	/// The player starts playing when the radioURL property gets set. (default == true)
 	open var isAutoPlay = true
 
-	public init(radioURL: URL? = nil, isAutoPlay: Bool = true) {
+	public init(audioSession: AVAudioSession, radioURL: URL? = nil, isAutoPlay: Bool = true) {
 		self.infoCenterData = infoCenterDataSubject.asObserver()
 
 		self.state = stateSubject.asObservable()
@@ -88,16 +88,6 @@ open class RadioPlayer: RadioPlayerType {
 
 		self.isAutoPlay = isAutoPlay
 		self.radioURL = radioURL
-
-		let audioSession = AVAudioSession.sharedInstance()
-		var options: AVAudioSession.CategoryOptions = []
-		#if os(iOS)
-		options = [.defaultToSpeaker, .allowBluetooth, .allowAirPlay]
-		#elseif os(tvOS)
-		options = []
-		#endif
-		try? audioSession.setCategory(.playback, mode: .default, options: options)
-		try? audioSession.setActive(true)
 
 		setupRemoteCommandCenter()
 
