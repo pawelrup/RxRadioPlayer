@@ -8,13 +8,10 @@
 
 import AVFoundation
 import RxSwift
-import MediaPlayer
 
 public protocol RadioPlayerType {
 	var radioURL: URL? { get set }
 	var isAutoPlay: Bool { get set }
-
-	var infoCenterData: AnyObserver<RadioPlayerInfoCenterData> { get }
 
 	var state: Observable<RadioPlayerState> { get }
 	var playbackState: Observable<RadioPlayerPlaybackState> { get }
@@ -45,7 +42,6 @@ open class RadioPlayer: RadioPlayerType {
 		}
 	}
 
-	private let infoCenterDataSubject = PublishSubject<RadioPlayerInfoCenterData>()
 	private let stateSubject = BehaviorSubject<RadioPlayerState>(value: .urlNotSet)
 	private let playbackStateSubject = BehaviorSubject<RadioPlayerPlaybackState>(value: .stopped)
 	private let isPlayingSubject = BehaviorSubject<Bool>(value: false)
@@ -58,7 +54,6 @@ open class RadioPlayer: RadioPlayerType {
 
 	// MARK: - Properties
 
-	public let infoCenterData: AnyObserver<RadioPlayerInfoCenterData>
 	public let state: Observable<RadioPlayerState>
 	public let playbackState: Observable<RadioPlayerPlaybackState>
 	public let isPlaying: Observable<Bool>
@@ -77,7 +72,6 @@ open class RadioPlayer: RadioPlayerType {
 	open var isAutoPlay = true
 
 	public init(audioSession: AVAudioSession, radioURL: URL? = nil, isAutoPlay: Bool = true) {
-		self.infoCenterData = infoCenterDataSubject.asObserver()
 
 		self.state = stateSubject.asObservable()
 		self.playbackState = playbackStateSubject
@@ -89,8 +83,6 @@ open class RadioPlayer: RadioPlayerType {
 		self.isAutoPlay = isAutoPlay
 		self.radioURL = radioURL
 
-		setupRemoteCommandCenter()
-
 		// Check for headphones
 		checkHeadphonesConnection(outputs: audioSession.currentRoute.outputs)
 
@@ -100,47 +92,13 @@ open class RadioPlayer: RadioPlayerType {
 			.map { $0 == .playing }
 			.subscribe(isPlayingSubject)
 			.disposed(by: disposeBag)
-		infoCenterDataSubject
-			.subscribe(onNext: { [unowned self] (infoCenterData: RadioPlayerInfoCenterData) in
-				self.setNowPlayingInfo(withArtist: infoCenterData.artist, title: infoCenterData.title, andImage: infoCenterData.image)
-			})
-			.disposed(by: disposeBag)
 	}
 
 	deinit {
 		resetPlayer()
-		let remoteCommandCenter = MPRemoteCommandCenter.shared()
-		remoteCommandCenter.togglePlayPauseCommand.removeTarget(self)
-		remoteCommandCenter.playCommand.removeTarget(self)
-		remoteCommandCenter.pauseCommand.removeTarget(self)
-		remoteCommandCenter.stopCommand.removeTarget(self)
 	}
 
 	// MARK: - Private helpers
-
-	private func setupRemoteCommandCenter() {
-		let remoteCommandCenter = MPRemoteCommandCenter.shared()
-		remoteCommandCenter.togglePlayPauseCommand.isEnabled = true
-		remoteCommandCenter.togglePlayPauseCommand.addTarget { [weak self] _ -> MPRemoteCommandHandlerStatus in
-			self?.togglePlaying()
-			return .success
-		}
-		remoteCommandCenter.playCommand.isEnabled = true
-		remoteCommandCenter.playCommand.addTarget { [weak self] _ -> MPRemoteCommandHandlerStatus in
-			self?.play()
-			return .success
-		}
-		remoteCommandCenter.pauseCommand.isEnabled = true
-		remoteCommandCenter.pauseCommand.addTarget { [weak self] _ -> MPRemoteCommandHandlerStatus in
-			self?.pause()
-			return .success
-		}
-		remoteCommandCenter.stopCommand.isEnabled = true
-		remoteCommandCenter.stopCommand.addTarget { [weak self] _ -> MPRemoteCommandHandlerStatus in
-			self?.stop()
-			return .success
-		}
-	}
 
 	private func resetPlayer() {
 		stop()
@@ -250,19 +208,6 @@ open class RadioPlayer: RadioPlayerType {
 
 	open func togglePlaying() {
 		try? isPlayingSubject.value() ? pause() : play()
-	}
-
-	// MARK: - Info Center
-
-	public func setNowPlayingInfo(withArtist artist: String, title: String, andImage image: UIImage) {
-		let coverItem = MPMediaItemArtwork(boundsSize: image.size) { (_: CGSize) -> UIImage in
-				return image
-			}
-		var nowPlayingInfo = [String: Any]()
-		nowPlayingInfo[MPMediaItemPropertyArtist] = artist
-		nowPlayingInfo[MPMediaItemPropertyTitle] = title
-		nowPlayingInfo[MPMediaItemPropertyArtwork] = coverItem
-		MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
 	}
 
 	// MARK: - Observing
