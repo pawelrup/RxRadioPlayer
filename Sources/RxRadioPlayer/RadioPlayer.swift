@@ -8,6 +8,8 @@
 
 import AVFoundation
 import RxSwift
+import RxCocoa
+import RxAVFoundation
 
 public protocol RadioPlayerType {
 	var radioURL: URL? { get set }
@@ -74,11 +76,11 @@ open class RadioPlayer: RadioPlayerType {
 	public init(audioSession: AVAudioSession, radioURL: URL? = nil, isAutoPlay: Bool = true) {
 
 		self.state = stateSubject.asObservable()
-		self.playbackState = playbackStateSubject
-		self.isPlaying = isPlayingSubject
-		self.metadata = metadataSubject
-		self.rate = rateSubject
-		self.areHeadphonesConnected = areHeadphonesConnectedSubject
+		self.playbackState = playbackStateSubject.asObservable()
+		self.isPlaying = isPlayingSubject.asObservable()
+		self.metadata = metadataSubject.asObservable()
+		self.rate = rateSubject.asObservable()
+		self.areHeadphonesConnected = areHeadphonesConnectedSubject.asObservable()
 
 		self.isAutoPlay = isAutoPlay
 		self.radioURL = radioURL
@@ -213,17 +215,32 @@ open class RadioPlayer: RadioPlayerType {
 	// MARK: - Observing
 
 	private func setObservables(to audioSession: AVAudioSession) {
-		audioSession.rx.routeChange
+		NotificationCenter.default.rx.notification(AVAudioSession.routeChangeNotification)
+			.map { $0.userInfo }
+			.map {
+				let reasonRaw = $0?[AVAudioSessionRouteChangeReasonKey] as? UInt
+				let previousRoute = $0?[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
+				return (reasonRaw, previousRoute)
+			}
+			.map { (reasonRaw: UInt?, previousRoute: AVAudioSessionRouteDescription?) -> (AVAudioSession.RouteChangeReason, AVAudioSessionRouteDescription?) in
+				let reason: AVAudioSession.RouteChangeReason
+				if let raw = reasonRaw {
+					reason = AVAudioSession.RouteChangeReason(rawValue: raw) ?? .unknown
+				} else {
+					reason = .unknown
+				}
+				return (reason: reason, previousRouteDescription: previousRoute)
+			}
 			.subscribeOn(MainScheduler.instance)
-			.subscribe(onNext: { [weak self, weak audioSession] (routeChangeInfo: AVAudioSessionRouteChangeInfo) in
-				switch routeChangeInfo.reason {
+			.subscribe(onNext: { [weak self, weak audioSession] (reason, previousRouteDescription) in
+				switch reason {
 				case .newDeviceAvailable:
 					guard let strongSelf = self,
 						let session = audioSession else { return }
 					strongSelf.checkHeadphonesConnection(outputs: session.currentRoute.outputs)
 				case .oldDeviceUnavailable:
 					guard let strongSelf = self,
-						let previousRoute = routeChangeInfo.previousRouteDescription else { return }
+						let previousRoute = previousRouteDescription else { return }
 					strongSelf.checkHeadphonesConnection(outputs: previousRoute.outputs)
 					try? strongSelf.areHeadphonesConnectedSubject.value() ? () : strongSelf.pause()
 				default: break
@@ -233,7 +250,14 @@ open class RadioPlayer: RadioPlayerType {
 	}
 
 	private func setObservables(to item: AVPlayerItem) {
-		item.rx.status
+		let isPlaybackLikelyToKeepUp = item.rx.observe(Bool.self, #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp))
+			.map { $0 ?? false }
+			.share()
+		let isPlaybackBufferEmpty = item.rx.observe(Bool.self, #keyPath(AVPlayerItem.isPlaybackBufferEmpty))
+			.map { $0 ?? false }
+			.share()
+		item.rx.observe(AVPlayerItem.Status.self, #keyPath(AVPlayerItem.status))
+			.map { $0 ?? .unknown }
 			.subscribe(onNext: { [weak self] (status: AVPlayerItem.Status) in
 				if status == .readyToPlay {
 					self?.stateSubject.onNext(.readyToPlay)
@@ -242,20 +266,21 @@ open class RadioPlayer: RadioPlayerType {
 				}
 			})
 			.disposed(by: avPlayerItemDisposables)
-		item.rx.playbackBufferEmpty
+		isPlaybackBufferEmpty
 			.subscribe(onNext: { [weak self] (isBufferEmpty: Bool) in
 				if isBufferEmpty {
 					self?.stateSubject.onNext(.loading)
 				}
 			})
 			.disposed(by: avPlayerItemDisposables)
-		item.rx.playbackLikelyToKeepUp
+		isPlaybackLikelyToKeepUp
 			.map { (isLikelyToKeepUp: Bool) in
 				return isLikelyToKeepUp ? .loadingFinished : .loading
 			}
 			.bind(to: stateSubject)
 			.disposed(by: avPlayerItemDisposables)
-		item.rx.timedMetadata
+		item.rx.observe([AVMetadataItem].self, #keyPath(AVPlayerItem.timedMetadata))
+			.map { $0 ?? [] }
 			.map { $0.first }
 			.compactMap { $0 }
 			.map { RadioPlayerMetadata(metadata: $0) }
@@ -264,7 +289,7 @@ open class RadioPlayer: RadioPlayerType {
 			.bind(to: metadataSubject)
 			.disposed(by: avPlayerItemDisposables)
 		Observable
-			.combineLatest(item.rx.playbackLikelyToKeepUp, item.rx.playbackBufferEmpty) { (playbackLikelyToKeepUp: Bool, playbackBufferEmpty: Bool) in
+			.combineLatest(isPlaybackLikelyToKeepUp, isPlaybackBufferEmpty) { (playbackLikelyToKeepUp: Bool, playbackBufferEmpty: Bool) in
 				return !playbackLikelyToKeepUp && playbackBufferEmpty
 			}
 			.filter { [weak self] (stoppedUnexpectedly: Bool) in

@@ -1,6 +1,0 @@
-use_frameworks!
-target 'RxRadioPlayer_Tests' do
-  pod 'RxRadioPlayer', :path => '../'
-  
-  
-end
